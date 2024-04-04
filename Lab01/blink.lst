@@ -1,0 +1,370 @@
+gplink-1.4.0 #1107 (Jan  1 2021)
+Copyright (c) 1998-2014 gputils project
+Listing File Generated: 4-3-2024  23:14:09
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SDCC : free open source ANSI-C Compiler
+                                           ; Version 4.0.0 #11528 (Linux)
+                                           ;--------------------------------------------------------
+                                           ; PIC port for the 14-bit core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"blink.c"
+                                           	list	p=12f675
+                                           	radix dec
+                                           	include "p12f675.inc"
+                                                   LIST
+                                           
+                                           ;==========================================================================
+                                           ; Build date : Aug 07 2014
+                                           ;  MPASM PIC12F675 processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2014 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+                                           
+                                                   NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_TRISIO
+                                           	extern	_GPIO
+                                           	extern	_GPIObits
+                                           	extern	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_delay
+                                           	global	_RandomNum
+                                           
+                                           	global PSAVE
+                                           	global SSAVE
+                                           	global WSAVE
+                                           	global STK12
+                                           	global STK11
+                                           	global STK10
+                                           	global STK09
+                                           	global STK08
+                                           	global STK07
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0020
+                                           PSAVE	res 1
+                                           SSAVE	res 1
+                                           WSAVE	res 1
+                                           STK12	res 1
+                                           STK11	res 1
+                                           STK10	res 1
+                                           STK09	res 1
+                                           STK08	res 1
+                                           STK07	res 1
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_blink_0	udata
+                                           r0x100C	res	1
+                                           r0x1005	res	1
+                                           r0x1004	res	1
+                                           r0x1006	res	1
+                                           r0x1007	res	1
+                                           r0x1008	res	1
+                                           r0x1009	res	1
+                                           r0x100A	res	1
+                                           r0x100B	res	1
+                                           r0x1001	res	1
+                                           r0x1002	res	1
+                                           r0x1003	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           IDD_blink_0	idata
+                                           _RandomNum_lfsr_65536_13
+                                           	db	0x07	; 7
+                                           
+                                           ;--------------------------------------------------------
+                                           ; initialized absolute data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   0000     nop                      	nop
+                                           	pagesel __sdcc_gsinit_startup
+000001   2802     goto    0x0002           	goto	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_blink	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _RandomNum
+                                           ;   _delay
+                                           ;   _RandomNum
+                                           ;   _delay
+                                           ;2 compiler assigned registers:
+                                           ;   r0x100C
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_blink__main	code
+                                           _main:
+                                           ; 2 exit points
+                                           ;	.line	11; "blink.c"	TRISIO = 0b00100000;                    // COnfigurar como entra el PIN5.
+00009e   3020     movlw   0x20             	MOVLW	0x20
+00009f   1683     bsf     0x03, 0x5        	BANKSEL	_TRISIO
+0000a0   0085     movwf   0x05             	MOVWF	_TRISIO
+                                           ;	.line	12; "blink.c"	GPIO = 0x00;                            // Poner en bajo las GPIO.
+0000a1   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000a2   0185     clrf    0x05             	CLRF	_GPIO
+                                           _00115_DS_:
+                                           ;	.line	17; "blink.c"	if (GP5 == 0) {                     // Condición de inicio.
+0000a3   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000a4   1a85     btfsc   0x05, 0x5        	BTFSC	_GPIObits,5
+0000a5   28a3     goto    0x00a3           	GOTO	_00115_DS_
+                                           ;	.line	18; "blink.c"	valor = RandomNum();
+                                           	PAGESEL	_RandomNum
+0000a6   2138     call    0x0138           	CALL	_RandomNum
+                                           	PAGESEL	$
+0000a7   00b0     movwf   0x30             	MOVWF	r0x100C
+                                           ;	.line	19; "blink.c"	GPIO = 0x00;                    // Estado inicial del GPIO.
+0000a8   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000a9   0185     clrf    0x05             	CLRF	_GPIO
+                                           ;;unsigned compare: left < lit(0x1=1), size=1
+                                           ;	.line	21; "blink.c"	switch (valor) {
+0000aa   3001     movlw   0x01             	MOVLW	0x01
+0000ab   0230     subwf   0x30, 0x0        	SUBWF	r0x100C,W
+0000ac   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0000ad   28d5     goto    0x00d5           	GOTO	_00111_DS_
+                                           ;;genSkipc:3307: created from rifx:0x7ffce9179560
+                                           ;;swapping arguments (AOP_TYPEs 1/2)
+                                           ;;unsigned compare: left >= lit(0x7=7), size=1
+0000ae   3007     movlw   0x07             	MOVLW	0x07
+0000af   0230     subwf   0x30, 0x0        	SUBWF	r0x100C,W
+0000b0   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+0000b1   28d5     goto    0x00d5           	GOTO	_00111_DS_
+                                           ;;genSkipc:3307: created from rifx:0x7ffce9179560
+0000b2   03b0     decf    0x30, 0x1        	DECF	r0x100C,F
+0000b3   3000     movlw   0x00             	MOVLW	HIGH(_00137_DS_)
+0000b4   008a     movwf   0x0a             	MOVWF	PCLATH
+0000b5   30ba     movlw   0xba             	MOVLW	_00137_DS_
+0000b6   0730     addwf   0x30, 0x0        	ADDWF	r0x100C,W
+0000b7   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+0000b8   0a8a     incf    0x0a, 0x1        	INCF	PCLATH,F
+0000b9   0082     movwf   0x02             	MOVWF	PCL
+                                           _00137_DS_:
+0000ba   28c0     goto    0x00c0           	GOTO	_00105_DS_
+0000bb   28c3     goto    0x00c3           	GOTO	_00106_DS_
+0000bc   28c6     goto    0x00c6           	GOTO	_00107_DS_
+0000bd   28c9     goto    0x00c9           	GOTO	_00108_DS_
+0000be   28cd     goto    0x00cd           	GOTO	_00109_DS_
+0000bf   28d1     goto    0x00d1           	GOTO	_00110_DS_
+                                           _00105_DS_:
+                                           ;	.line	23; "blink.c"	GP0 = 1;
+0000c0   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000c1   1405     bsf     0x05, 0x0        	BSF	_GPIObits,0
+                                           ;	.line	24; "blink.c"	break;
+0000c2   28d5     goto    0x00d5           	GOTO	_00111_DS_
+                                           _00106_DS_:
+                                           ;	.line	27; "blink.c"	GP1 = 1;
+0000c3   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000c4   1485     bsf     0x05, 0x1        	BSF	_GPIObits,1
+                                           ;	.line	28; "blink.c"	break;
+0000c5   28d5     goto    0x00d5           	GOTO	_00111_DS_
+                                           _00107_DS_:
+                                           ;	.line	31; "blink.c"	GP2 = 1;
+0000c6   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000c7   1505     bsf     0x05, 0x2        	BSF	_GPIObits,2
+                                           ;	.line	32; "blink.c"	break;
+0000c8   28d5     goto    0x00d5           	GOTO	_00111_DS_
+                                           _00108_DS_:
+                                           ;	.line	35; "blink.c"	GP0 = 1;
+0000c9   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000ca   1405     bsf     0x05, 0x0        	BSF	_GPIObits,0
+                                           ;	.line	36; "blink.c"	GP2 = 1;
+0000cb   1505     bsf     0x05, 0x2        	BSF	_GPIObits,2
+                                           ;	.line	37; "blink.c"	break;
+0000cc   28d5     goto    0x00d5           	GOTO	_00111_DS_
+                                           _00109_DS_:
+                                           ;	.line	40; "blink.c"	GP1 = 1;
+0000cd   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000ce   1485     bsf     0x05, 0x1        	BSF	_GPIObits,1
+                                           ;	.line	41; "blink.c"	GP2 = 1;
+0000cf   1505     bsf     0x05, 0x2        	BSF	_GPIObits,2
+                                           ;	.line	42; "blink.c"	break;
+0000d0   28d5     goto    0x00d5           	GOTO	_00111_DS_
+                                           _00110_DS_:
+                                           ;	.line	45; "blink.c"	GP0 = 1;
+0000d1   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000d2   1405     bsf     0x05, 0x0        	BSF	_GPIObits,0
+                                           ;	.line	46; "blink.c"	GP1 = 1;
+0000d3   1485     bsf     0x05, 0x1        	BSF	_GPIObits,1
+                                           ;	.line	47; "blink.c"	GP2 = 1;
+0000d4   1505     bsf     0x05, 0x2        	BSF	_GPIObits,2
+                                           _00111_DS_:
+                                           ;	.line	52; "blink.c"	delay(300);
+0000d5   302c     movlw   0x2c             	MOVLW	0x2c
+0000d6   00af     movwf   0x2f             	MOVWF	STK00
+0000d7   3001     movlw   0x01             	MOVLW	0x01
+                                           	PAGESEL	_delay
+0000d8   2111     call    0x0111           	CALL	_delay
+                                           	PAGESEL	$
+                                           ;	.line	53; "blink.c"	GPIO = 0x00;
+0000d9   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000da   0185     clrf    0x05             	CLRF	_GPIO
+0000db   28a3     goto    0x00a3           	GOTO	_00115_DS_
+                                           ;	.line	56; "blink.c"	}
+0000dc   0008     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;3 compiler assigned registers:
+                                           ;   r0x1001
+                                           ;   r0x1002
+                                           ;   r0x1003
+                                           ;; Starting pCode block
+                                           S_blink__RandomNum	code
+                                           _RandomNum:
+                                           ; 2 exit points
+                                           _00174_DS_:
+                                           ;	.line	80; "blink.c"	random_b = ((lfsr >> 0) ^ (lfsr >> 1)) & 1; 
+000138   0848     movf    0x48, 0x0        	MOVF	_RandomNum_lfsr_65536_13,W
+000139   00b9     movwf   0x39             	MOVWF	r0x1001
+                                           ;;shiftRight_Left2ResultLit:5474: shCount=1, size=1, sign=0, same=0, offr=0
+00013a   1003     bcf     0x03, 0x0        	BCF	STATUS,0
+00013b   0c48     rrf     0x48, 0x0        	RRF	_RandomNum_lfsr_65536_13,W
+00013c   00ba     movwf   0x3a             	MOVWF	r0x1002
+00013d   06b9     xorwf   0x39, 0x1        	XORWF	r0x1001,F
+00013e   3001     movlw   0x01             	MOVLW	0x01
+00013f   05b9     andwf   0x39, 0x1        	ANDWF	r0x1001,F
+                                           ;	.line	81; "blink.c"	lfsr = (lfsr >> 1) | (random_b << 2);
+000140   0839     movf    0x39, 0x0        	MOVF	r0x1001,W
+000141   00bb     movwf   0x3b             	MOVWF	r0x1003
+000142   1003     bcf     0x03, 0x0        	BCF	STATUS,0
+000143   0d3b     rlf     0x3b, 0x0        	RLF	r0x1003,W
+000144   00b9     movwf   0x39             	MOVWF	r0x1001
+000145   1003     bcf     0x03, 0x0        	BCF	STATUS,0
+000146   0db9     rlf     0x39, 0x1        	RLF	r0x1001,F
+000147   0839     movf    0x39, 0x0        	MOVF	r0x1001,W
+000148   00bb     movwf   0x3b             	MOVWF	r0x1003
+000149   043a     iorwf   0x3a, 0x0        	IORWF	r0x1002,W
+00014a   00c8     movwf   0x48             	MOVWF	_RandomNum_lfsr_65536_13
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x7=7), size=1
+                                           ;	.line	82; "blink.c"	} while (lfsr > 6);  // Nos aseguramos de solo obtener valores entre 1 y 6
+00014b   3007     movlw   0x07             	MOVLW	0x07
+00014c   0248     subwf   0x48, 0x0        	SUBWF	_RandomNum_lfsr_65536_13,W
+00014d   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+00014e   2938     goto    0x0138           	GOTO	_00174_DS_
+                                           ;;genSkipc:3307: created from rifx:0x7ffce9179560
+                                           ;	.line	84; "blink.c"	return lfsr;  
+00014f   0848     movf    0x48, 0x0        	MOVF	_RandomNum_lfsr_65536_13,W
+                                           ;	.line	85; "blink.c"	}
+000150   0008     return                   	RETURN	
+                                           ; exit point of _RandomNum
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;9 compiler assigned registers:
+                                           ;   r0x1004
+                                           ;   STK00
+                                           ;   r0x1005
+                                           ;   r0x1006
+                                           ;   r0x1007
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;   r0x100B
+                                           ;; Starting pCode block
+                                           S_blink__delay	code
+                                           _delay:
+                                           ; 2 exit points
+                                           ;	.line	61; "blink.c"	void delay(unsigned int time) {
+000111   00b2     movwf   0x32             	MOVWF	r0x1004
+000112   082f     movf    0x2f, 0x0        	MOVF	STK00,W
+000113   00b1     movwf   0x31             	MOVWF	r0x1005
+                                           ;	.line	66; "blink.c"	for (i = 0; i < time; i++) {
+000114   01b3     clrf    0x33             	CLRF	r0x1006
+000115   01b4     clrf    0x34             	CLRF	r0x1007
+                                           _00148_DS_:
+000116   0832     movf    0x32, 0x0        	MOVF	r0x1004,W
+000117   0234     subwf   0x34, 0x0        	SUBWF	r0x1007,W
+000118   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000119   291c     goto    0x011c           	GOTO	_00169_DS_
+00011a   0831     movf    0x31, 0x0        	MOVF	r0x1005,W
+00011b   0233     subwf   0x33, 0x0        	SUBWF	r0x1006,W
+                                           _00169_DS_:
+00011c   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+00011d   2937     goto    0x0137           	GOTO	_00150_DS_
+                                           ;;genSkipc:3307: created from rifx:0x7ffce9179560
+                                           ;	.line	68; "blink.c"	for (j = 0; j < 1200; j++);
+00011e   30b0     movlw   0xb0             	MOVLW	0xb0
+00011f   00b5     movwf   0x35             	MOVWF	r0x1008
+000120   3004     movlw   0x04             	MOVLW	0x04
+000121   00b6     movwf   0x36             	MOVWF	r0x1009
+                                           _00146_DS_:
+000122   30ff     movlw   0xff             	MOVLW	0xff
+000123   0735     addwf   0x35, 0x0        	ADDWF	r0x1008,W
+000124   00b7     movwf   0x37             	MOVWF	r0x100A
+000125   30ff     movlw   0xff             	MOVLW	0xff
+000126   00b8     movwf   0x38             	MOVWF	r0x100B
+000127   0836     movf    0x36, 0x0        	MOVF	r0x1009,W
+000128   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000129   0f36     incfsz  0x36, 0x0        	INCFSZ	r0x1009,W
+00012a   07b8     addwf   0x38, 0x1        	ADDWF	r0x100B,F
+00012b   0837     movf    0x37, 0x0        	MOVF	r0x100A,W
+00012c   00b5     movwf   0x35             	MOVWF	r0x1008
+00012d   0838     movf    0x38, 0x0        	MOVF	r0x100B,W
+00012e   00b6     movwf   0x36             	MOVWF	r0x1009
+00012f   0838     movf    0x38, 0x0        	MOVF	r0x100B,W
+000130   0437     iorwf   0x37, 0x0        	IORWF	r0x100A,W
+000131   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000132   2922     goto    0x0122           	GOTO	_00146_DS_
+                                           ;	.line	66; "blink.c"	for (i = 0; i < time; i++) {
+000133   0ab3     incf    0x33, 0x1        	INCF	r0x1006,F
+000134   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000135   0ab4     incf    0x34, 0x1        	INCF	r0x1007,F
+000136   2916     goto    0x0116           	GOTO	_00148_DS_
+                                           _00150_DS_:
+                                           ;	.line	70; "blink.c"	}
+000137   0008     return                   	RETURN	
+                                           ; exit point of _delay
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  116+   15 =   131 instructions (  292 byte)
+                                           
+                                           	end
