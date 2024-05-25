@@ -15,7 +15,7 @@ void ALERT(void);
 
 int main(void)
 {   
-    // ---------------- Inicialisar el Display: --------------------
+    // ---------------- Inicializar el Display: --------------------
 	clock_setup();
 	console_setup(115200);
 
