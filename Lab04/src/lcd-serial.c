@@ -401,7 +401,7 @@ GYRO GYRO_DATA(void){
 	get.Eje_Z=spi_read(SPI5);
 	gpio_set(GPIOC, GPIO1);
 
-	gpio_clear(GPIOC, GPIO1);          // Lee el valor convertido
+	gpio_clear(GPIOC, GPIO1);
 	spi_send(SPI5, 0x2D | (1 << 7));
 	spi_read(SPI5);
 	spi_send(SPI5, 0);
