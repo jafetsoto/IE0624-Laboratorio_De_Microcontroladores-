@@ -1,26 +1,45 @@
-lcd-spi.o: lcd-spi.c /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/spi.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/cm3/common.h \
+lcd-spi.o: lcd-spi.c stm32/stm32_all.h /usr/include/newlib/stdio.h \
+ /usr/include/newlib/_ansi.h /usr/include/newlib/newlib.h \
+ /usr/include/newlib/_newlib_version.h /usr/include/newlib/sys/config.h \
+ /usr/include/newlib/machine/ieeefp.h /usr/include/newlib/sys/features.h \
+ /usr/include/newlib/sys/cdefs.h \
+ /usr/include/newlib/machine/_default_types.h \
+ /usr/lib/gcc/arm-none-eabi/10.3.1/include/stddef.h \
+ /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdarg.h \
+ /usr/include/newlib/sys/reent.h /usr/include/newlib/_ansi.h \
+ /usr/include/newlib/sys/_types.h /usr/include/newlib/machine/_types.h \
+ /usr/include/newlib/sys/lock.h /usr/include/newlib/sys/types.h \
+ /usr/include/newlib/sys/_stdint.h \
+ /usr/include/newlib/sys/_pthreadtypes.h \
+ /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
+ /usr/include/newlib/string.h /usr/include/newlib/sys/string.h \
+ /usr/include/newlib/stdlib.h /usr/include/newlib/machine/stdlib.h \
+ stm32/adc.h ../../../../../libopencm3//include/libopencm3/cm3/common.h \
+ /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h \
  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdbool.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/memorymap.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/f4/memorymap.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/cm3/memorymap.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/f4/spi.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/spi_common_v1_frf.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/spi_common_v1.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/spi_common_all.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/rcc.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/f4/rcc.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/pwr.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/f4/pwr.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/pwr_common_v1.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/rcc_common_all.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/gpio.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/f4/gpio.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/gpio_common_f24.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/gpio_common_f234.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/common/gpio_common_all.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/cm3/nvic.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/dispatch/nvic.h \
- /home/jafet/Documents/1_Jafet/GitRepos/libopencm3-examples/libopencm3/include/libopencm3/stm32/f4/nvic.h \
- console.h clock.h sdram.h lcd-spi.h
+ ../../../../../libopencm3//include/libopencm3/stm32/memorymap.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/f4/memorymap.h \
+ ../../../../../libopencm3//include/libopencm3/cm3/memorymap.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/f4/adc.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/adc_common_v1_multi.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/adc_common_v1.h \
+ stm32/gpio.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/f4/gpio.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/gpio_common_f24.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/gpio_common_f234.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/gpio_common_all.h \
+ stm32/rcc.h ../../../../../libopencm3//include/libopencm3/stm32/f4/rcc.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/pwr.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/f4/pwr.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/pwr_common_v1.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/rcc_common_all.h \
+ stm32/usart.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/f4/usart.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/usart_common_f24.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/usart_common_f124.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/usart_common_all.h \
+ stm32/spi.h ../../../../../libopencm3//include/libopencm3/stm32/f4/spi.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/spi_common_v1_frf.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/spi_common_v1.h \
+ ../../../../../libopencm3//include/libopencm3/stm32/common/spi_common_all.h \
+ stm32/gfx.h stm32/console.h stm32/lcd-spi.h stm32/clock.h stm32/sdram.h

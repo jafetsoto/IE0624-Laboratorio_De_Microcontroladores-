@@ -20,15 +20,7 @@
 /*
  * Initialize the ST Micro TFT Display using the SPI port
  */
-#include <stdint.h>
-#include <libopencm3/stm32/spi.h>
-#include <libopencm3/stm32/rcc.h>
-#include <libopencm3/stm32/gpio.h>
-#include <libopencm3/cm3/nvic.h>
-#include "console.h"
-#include "clock.h"
-#include "sdram.h"
-#include "lcd-spi.h"
+# include "stm32/stm32_all.h"
 
 
 /* forward prototypes for some helper functions */
