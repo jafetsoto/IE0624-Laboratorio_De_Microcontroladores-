@@ -34,6 +34,8 @@ GYRO GYRO_DATA(void);
 static void usart_setup(void);
 static uint16_t read_adc_naiive(uint8_t channel);
 
+void send_comm(float DX, float DB, float DC, float TempComm);
+
 // =======================================================
 int main(void){
     
@@ -63,7 +65,7 @@ int main(void){
 		sprintf(DATA_X, "%d", GYRO_01.Eje_X);
 		sprintf(DATA_Y, "%d", GYRO_01.Eje_Y);
 		sprintf(DATA_Z, "%d", GYRO_01.Eje_Z);
-        sprintf(TEMP, "%d", GYRO_01.Temp - 21);
+        sprintf(TEMP, "%d", GYRO_01.Temp - 17);
 
         // Batería:
         float Batery_Data = (float)((read_adc_naiive(3)*9)/4095.0)*100;
@@ -150,7 +152,21 @@ int main(void){
 		if (TX_EN)
         {
 			gfx_puts("ON");
-		}
+            strcat(mensaje, DATA_X);
+			strcat(mensaje, comma);
+		
+			strcat(mensaje, DATA_Y);
+			strcat(mensaje, comma);
+	
+			strcat(mensaje, DATA_Z);
+			strcat(mensaje, comma);
+			
+            strcat(mensaje, Batery_Level);
+			console_puts(mensaje);
+			console_puts("\n");
+			memset(mensaje, 0, 35);
+		}	
+
 		else
         {
 			gfx_puts("OFF");
@@ -165,18 +181,7 @@ int main(void){
         {
 			gpio_toggle(GPIOG, GPIO13);
 
-			strcat(mensaje, DATA_X);
-			strcat(mensaje, comma);
-		
-			strcat(mensaje, DATA_Y);
-			strcat(mensaje, comma);
-	
-			strcat(mensaje, DATA_Z);
-			strcat(mensaje, comma);
-			
-			console_puts(mensaje);
-			console_puts("\n");
-			memset(mensaje, 0, 35);
+
 		}
 
 		if (gpio_get(GPIOA, GPIO0))
@@ -184,7 +189,8 @@ int main(void){
 			if(TX_EN)
             {
 				TX_EN = 0;	
-				gpio_clear(GPIOG, GPIO13); //TX LED OFF
+				gpio_clear(GPIOG, GPIO13);
+
 			} 
             else
             {

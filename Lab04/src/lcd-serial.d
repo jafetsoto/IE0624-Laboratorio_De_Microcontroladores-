@@ -13,7 +13,6 @@ lcd-serial.o: lcd-serial.c stm32/stm32_all.h /usr/include/newlib/stdio.h \
  /usr/include/newlib/sys/_pthreadtypes.h \
  /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
  /usr/include/newlib/string.h /usr/include/newlib/sys/string.h \
- /usr/include/newlib/stdlib.h /usr/include/newlib/machine/stdlib.h \
  stm32/adc.h ../../../../../libopencm3//include/libopencm3/cm3/common.h \
  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h \
  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdbool.h \
