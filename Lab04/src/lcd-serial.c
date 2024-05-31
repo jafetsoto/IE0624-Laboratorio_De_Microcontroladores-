@@ -34,7 +34,7 @@ GYRO GYRO_DATA(void);
 static void usart_setup(void);
 static uint16_t read_adc_naiive(uint8_t channel);
 
-void send_comm(float DX, float DB, float DC, float TempComm);
+void delay(void);
 
 // =======================================================
 int main(void){
@@ -197,6 +197,7 @@ int main(void){
 				TX_EN = ~TX_EN;
 			}
 		}
+        delay();
   }
 
   return 0;
@@ -464,3 +465,9 @@ void PW_State(void){
     }
 }
 // =======================================================
+void delay(void) {
+    // fancyblink.c
+    for (int i = 0; i < 80000; i++) {
+        __asm__("nop");
+    }
+}

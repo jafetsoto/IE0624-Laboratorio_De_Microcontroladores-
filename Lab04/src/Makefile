@@ -13,3 +13,5 @@ include ../../Makefile.include
 run: all
 	@arm-none-eabi-objcopy -O binary lcd-serial.elf lcd-serial.bin
 	@st-flash --reset write $(BINARY).bin 0x8000000
+mqtt:
+	@python3 stm32f429i_to_mqtt.py

@@ -4,8 +4,8 @@ import json
 import time
 
 # Serial COMM
-SERIAL_COMM = serial.Serial("/dev/ttyACM0", 115200, timeout=1)
-print("Conectado al puerto serial /dev/ttyACM0")
+SERIAL_COMM = serial.Serial("/dev/ttyACM1", 115200, timeout=1)
+print("Conectado al puerto serial /dev/ttyACM1")
 
 # =======================================================
 # Callback function for MQTT client on connect
