@@ -1,11 +1,20 @@
+# ========================================================
+#                   Conexión MQTT para MCU
+#                       STM32F429I.
+#   Este archivo contiene el codigo diseñado para realizar
+# la conexión MQTT con el Dashboar de Things boar; y se 
+# basa en los cosigo de ejemplo que se muestran en:
+# https://github.com/thingsboard/thingsboard/blob/master/tools/src/main/python/
+# ========================================================
+# ========================================================
 import serial
 import paho.mqtt.client as mqtt
 import json
 import time
 
 # Serial COMM
-SERIAL_COMM = serial.Serial("/dev/ttyACM1", 115200, timeout=1)
-print("Conectado al puerto serial /dev/ttyACM1")
+SERIAL_COMM = serial.Serial("/dev/ttyACM0", 115200, timeout=1)
+print("Conectado al puerto serial /dev/ttyACM0")
 
 # =======================================================
 # Callback function for MQTT client on connect
@@ -72,6 +81,7 @@ while client.connected != True:
                 dictionary["Eje X"] = Serial_DATA[0]
                 dictionary["Eje Y"] = Serial_DATA[1]
                 dictionary["Eje Z"] = Serial_DATA[2]
+
 
                 if Serial_DATA[3]:  # Check if data exists in Serial_DATA[3]
                     dictionary["Bateria"] = Serial_DATA[3]

@@ -162,6 +162,7 @@ int main(void){
 			strcat(mensaje, comma);
 			
             strcat(mensaje, Batery_Level);
+
 			console_puts(mensaje);
 			console_puts("\n");
 			memset(mensaje, 0, 35);
@@ -301,6 +302,7 @@ void GPIO_CONFIG(void){
 
 }
 // =======================================================
+// adc-dac-printf
 static void adc_setup(void){
     gpio_mode_setup(GPIOA, GPIO_MODE_ANALOG, GPIO_PUPD_NONE, GPIO2);
 
@@ -316,6 +318,7 @@ static void adc_setup(void){
 
 }
 // =======================================================
+// adc-dac-printf
 static uint16_t read_adc_naiive(uint8_t channel){
     uint8_t channel_array[1];
     channel_array[0] = channel;
@@ -424,7 +427,7 @@ GYRO GYRO_DATA(void){
 	return get;
 }
 // =======================================================
-// USART:
+// usart_irq:
 static void usart_setup(void){
     usart_set_baudrate(USART1, 115200);               // bps
     usart_set_databits(USART1, 8);                    // Tramas de 8 bits 
@@ -465,8 +468,8 @@ void PW_State(void){
     }
 }
 // =======================================================
+// fancyblink.c
 void delay(void) {
-    // fancyblink.c
     for (int i = 0; i < 80000; i++) {
         __asm__("nop");
     }
