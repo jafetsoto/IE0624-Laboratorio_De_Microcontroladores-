@@ -1,4 +1,4 @@
-# IE0623-Laboratorio_De_Microcontroladores.
+# IE0624-Laboratorio_De_Microcontroladores.
 Este repositorio contiene el trabajo realizado para el Laboratorio de Microcontroladores (IE0623) 
 
 # Lab01
