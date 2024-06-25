@@ -1,5 +1,5 @@
 # IE0624-Laboratorio_De_Microcontroladores.
-Este repositorio contiene el trabajo realizado para el Laboratorio de Microcontroladores (IE0623) 
+Este repositorio contiene el trabajo realizado para el Laboratorio de Microcontroladores (IE0624) 
 
 # Lab01
 El proyecto tiene como objetivo introducir a los estudiantes al manejo de GPIOs, generación de números aleatorios y desarrollo de firmware para el microcontrolador PIC12F683.
