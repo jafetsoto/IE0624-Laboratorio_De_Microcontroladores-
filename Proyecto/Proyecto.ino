@@ -90,16 +90,21 @@ public:
         break;
 
       case Cambio:
-        for (int i = 0; i < 3; i++) {
-          digitalWrite(verdeNorteSur, LOW);
-          digitalWrite(verdeOesteEste, LOW);
-          
-          delay(100);
-          
-          digitalWrite(rojoNorteSur, HIGH);
-          digitalWrite(rojoOesteEste, HIGH);
-          
-        }
+        digitalWrite(verdeNorteSur, LOW);
+        digitalWrite(verdeOesteEste, LOW);
+        delay(250);
+        digitalWrite(rojoNorteSur, HIGH);
+        digitalWrite(rojoOesteEste, HIGH);
+        delay(250);
+        digitalWrite(verdeNorteSur, LOW);
+        digitalWrite(verdeOesteEste, LOW);
+        delay(250);
+        digitalWrite(rojoNorteSur, HIGH);
+        digitalWrite(rojoOesteEste, HIGH);
+        delay(250);
+        digitalWrite(rojoNorteSur, HIGH);
+        digitalWrite(rojoOesteEste, HIGH);
+        delay(250);
         break;
 
       default:
@@ -134,6 +139,14 @@ void setup() {
 }
 
 void loop() {
+
+  Cruces_FSM();
+  lcd.setCursor(0, 3);
+  lcd.print("01:EAN");
+  Entrada_Norte_A = 13;
+  Cruces_FSM();
+
+  Entrada_Norte_A = 10;
   Cruces_FSM();
 }
 
@@ -166,6 +179,9 @@ void Cruces_FSM(){
         Via_DO_CE > 12 || Via_CE_DO > 12) 
         {
         STATE_CONGEST = WARNING;
+        lcd.setCursor(0, 3);
+        lcd.print("WARNING");
+        //delay(100);
         
         } else {
       STATE_CONGEST = IDLE;
@@ -189,30 +205,50 @@ void Cruces_FSM(){
     else if (Entrada_Norte_B > 12 || Via_BS_DN > 12 || Entrada_Sur_D   > 12 || Via_DN_BS > 12)
     {
       STATE_CONGEST = DESCON_V2;
+    } else {
+      STATE_CONGEST = IDLE;
     }
   break;
 
   case DESCON_H1:
+    lcd.setCursor(0, 3);
+    lcd.print("DESCON_H1");
     semaforoA.FSM_Semaforo(Cruce_H);
     semaforoB.FSM_Semaforo(Cruce_H);
+    semaforoC.FSM_Semaforo(estadoC);
+    semaforoD.FSM_Semaforo(estadoD);
+    STATE_CONGEST = WARNING;
 
   break;
 
   case DESCON_H2:
+    lcd.setCursor(0, 3);  
+    lcd.print("DESCON_H2");
+    semaforoA.FSM_Semaforo(estadoA);
+    semaforoB.FSM_Semaforo(estadoB);
     semaforoC.FSM_Semaforo(Cruce_H);
     semaforoD.FSM_Semaforo(Cruce_H);
+    STATE_CONGEST = WARNING;
 
   break;
 
   case DESCON_V1:
+    lcd.print("DESCON_V1");
     semaforoA.FSM_Semaforo(Cruce_V);
+    semaforoB.FSM_Semaforo(estadoB);
     semaforoC.FSM_Semaforo(Cruce_V);
+    semaforoD.FSM_Semaforo(estadoD);
+    STATE_CONGEST = WARNING;
 
   break;
 
   case DESCON_V2:
-    semaforoB.FSM_Semaforo(Cruce_H);
-    semaforoD.FSM_Semaforo(Cruce_H);
+    lcd.print("DESCON_V2");
+    semaforoA.FSM_Semaforo(estadoA);
+    semaforoB.FSM_Semaforo(Cruce_V);
+    semaforoC.FSM_Semaforo(estadoC);
+    semaforoD.FSM_Semaforo(Cruce_V);
+    STATE_CONGEST = WARNING;
 
   break;
 
@@ -223,32 +259,20 @@ void Cruces_FSM(){
 
 void controladorIdle() {
   // Primero fase: Cruces Horizontales (Cruce_H)
-  Estado estadoA = Cruce_H;
-  Estado estadoB = Cruce_H;
-  Estado estadoC = Cruce_H;
-  Estado estadoD = Cruce_H;
+  estadoA = Cruce_H;
+  estadoB = Cruce_H;
+  estadoC = Cruce_H;
+  estadoD = Cruce_H;
 
   semaforoA.FSM_Semaforo(estadoA);
   semaforoB.FSM_Semaforo(estadoB);
   semaforoC.FSM_Semaforo(estadoC);
   semaforoD.FSM_Semaforo(estadoD);
   
-  delay(1000);
+  delay(5000);
 
-  // Segunda fase: Cruces Verticales (Cruce_V)
-  estadoA = Cruce_V;
-  estadoB = Cruce_V;
-  estadoC = Cruce_V;
-  estadoD = Cruce_V;
-
-  semaforoA.FSM_Semaforo(estadoA);
-  semaforoB.FSM_Semaforo(estadoB);
-  semaforoC.FSM_Semaforo(estadoC);
-  semaforoD.FSM_Semaforo(estadoD);
-
-  delay(1000);
-
-  // Tercera fase: Señal de Cambio
+  // Señal de cambio:
+  /*
   estadoA = Cambio;
   estadoB = Cambio;
   estadoC = Cambio;
@@ -259,5 +283,31 @@ void controladorIdle() {
   semaforoC.FSM_Semaforo(estadoC);
   semaforoD.FSM_Semaforo(estadoD);
 
-  delay(1000);
+  delay(5000);*/
+
+  // Cruce vertical:
+  estadoA = Cruce_V;
+  estadoB = Cruce_V;
+  estadoC = Cruce_V;
+  estadoD = Cruce_V;
+
+  semaforoA.FSM_Semaforo(estadoA);
+  semaforoB.FSM_Semaforo(estadoB);
+  semaforoC.FSM_Semaforo(estadoC);
+  semaforoD.FSM_Semaforo(estadoD);
+
+  delay(5000);
+  /*
+  // Señal de cambio:
+  estadoA = Cambio;
+  estadoB = Cambio;
+  estadoC = Cambio;
+  estadoD = Cambio;
+
+  semaforoA.FSM_Semaforo(estadoA);
+  semaforoB.FSM_Semaforo(estadoB);
+  semaforoC.FSM_Semaforo(estadoC);
+  semaforoD.FSM_Semaforo(estadoD);
+
+  delay(5000);*/
 }
