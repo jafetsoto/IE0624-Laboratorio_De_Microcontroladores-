@@ -4,46 +4,86 @@
 // Configurar la dirección de la pantalla I2C y el tamaño (20 columnas y 4 filas)
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
-// Definición de pines para LEDs
-const int ledSerie1 = 4;
-const int ledSerie2 = 5;
-const int ledSerie3 = 6;
-const int ledSerie4 = 7;
-const int ledSerie5 = 8;
-const int ledSerie6 = 9;
-const int ledSerie7 = 10;
-const int ledSerie8 = 11;
-const int ledSerie9 = 12;
-const int ledSerie10 = 13;
-const int ledSerie11 = A0;
-const int ledSerie12 = A1;
-const int ledSerie13 = A2;
-const int ledSerie14 = A3;
+byte N[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+};
 
-// Definición de pines para módulo RGB
-const int pinR = 2;
-const int pinG = 3;
+enum Estado {
+  Cruce_H,
+  Cruce_V,
+  Cambio
+};
 
-const int T_ON = 250;
+class Semaforo {
+public:
+  int rojoNorteSur, verdeNorteSur, rojoOesteEste, verdeOesteEste;
+
+  Semaforo(int rNS, int vNS, int rOE, int vOE) {
+    rojoNorteSur = rNS;
+    verdeNorteSur = vNS;
+    rojoOesteEste = rOE;
+    verdeOesteEste = vOE;
+
+    pinMode(rojoNorteSur, OUTPUT);
+    pinMode(verdeNorteSur, OUTPUT);
+    pinMode(rojoOesteEste, OUTPUT);
+    pinMode(verdeOesteEste, OUTPUT);
+  }
+
+  void FSM_Semaforo(int S_State) {
+    switch (S_State) {
+      case Cruce_H:
+        digitalWrite(verdeNorteSur, LOW);
+        digitalWrite(rojoNorteSur, HIGH);
+        digitalWrite(verdeOesteEste, HIGH);
+        digitalWrite(rojoOesteEste, LOW);
+        break;
+
+      case Cruce_V:
+        digitalWrite(verdeNorteSur, HIGH);
+        digitalWrite(rojoNorteSur, LOW);
+        digitalWrite(verdeOesteEste, LOW);
+        digitalWrite(rojoOesteEste, HIGH);
+        break;
+
+      case Cambio:
+        for (int i = 0; i < 3; i++) {
+          digitalWrite(verdeNorteSur, LOW);
+          digitalWrite(verdeOesteEste, LOW);
+          
+          delay(100);
+          
+          digitalWrite(rojoNorteSur, HIGH);
+          digitalWrite(rojoOesteEste, HIGH);
+          
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+};
+
+Semaforo semaforoA(5, 3, 4, 6);
+Semaforo semaforoB(8, 10, 7, 9);
+Semaforo semaforoC(12, A0, 11, 13);
+Semaforo semaforoD(A2, 1, A1, A3);
+
+Estado estadoA = Cruce_H;
+Estado estadoB = Cruce_H;
+Estado estadoC = Cruce_H;
+Estado estadoD = Cruce_H;
 
 void setup() {
-  // Configurar pines como salida
-  pinMode(pinR, OUTPUT);
-  pinMode(pinG, OUTPUT);
-  pinMode(ledSerie1, OUTPUT);
-  pinMode(ledSerie2, OUTPUT);
-  pinMode(ledSerie3, OUTPUT);
-  pinMode(ledSerie4, OUTPUT);
-  pinMode(ledSerie5, OUTPUT);
-  pinMode(ledSerie6, OUTPUT);
-  pinMode(ledSerie7, OUTPUT);
-  pinMode(ledSerie8, OUTPUT);
-  pinMode(ledSerie9, OUTPUT);
-  pinMode(ledSerie10, OUTPUT);
-  pinMode(ledSerie11, OUTPUT);
-  pinMode(ledSerie12, OUTPUT);
-  pinMode(ledSerie13, OUTPUT);
-  pinMode(ledSerie14, OUTPUT);
+  lcd.createChar(0, N);
 
   // Configurar LCD
   lcd.init();
@@ -51,49 +91,48 @@ void setup() {
   lcd.setCursor(0, 0);
   lcd.print("Sistema de");
   lcd.setCursor(0, 1);
-  lcd.print("Semaforos");
+  lcd.print("Semaforos.");
+
+  lcd.setCursor(15, 2);
+  lcd.write(byte(0));
 }
 
 void loop() {
-  Red_RGB();  // Encender el módulo RGB en rojo
-  delay(T_ON); // Mantener por 0.5 segundos
+  // Primera fase: Cruce_H
+  Estado estadoA = Cruce_H;
+  Estado estadoB = Cruce_H;
+  Estado estadoC = Cruce_H;
+  Estado estadoD = Cruce_H;
 
-  Green_RGB(); // Encender el módulo RGB en verde
-  delay(T_ON);  // Mantener por 0.5 segundos
-  OFF_RGB();
+  semaforoA.FSM_Semaforo(estadoA);
+  semaforoB.FSM_Semaforo(estadoB);
+  semaforoC.FSM_Semaforo(estadoC);
+  semaforoD.FSM_Semaforo(estadoD);
+  
+  delay(1000);
 
-  // Secuencia para LEDs en serie (pin 4-13, A0-A3)
-  for (int i = 4; i <= 13; i++) {
-    digitalWrite(i, HIGH); // Encender los LEDs
-    delay(T_ON);           // Mantener encendidos por 0.5 segundos
-    digitalWrite(i, LOW);  // Apagar los LEDs
-    delay(T_ON);           // Mantener apagados por 0.5 segundos
-  }
+  // Segunda fase: Cruce_V
+  estadoA = Cruce_V;
+  estadoB = Cruce_V;
+  estadoC = Cruce_V;
+  estadoD = Cruce_V;
 
-  // Secuencia para LEDs en serie (pines A0-A3)
-  for (int i = A0; i <= A3; i++) {
-    digitalWrite(i, HIGH); // Encender los LEDs
-    delay(T_ON);           // Mantener encendidos por 0.5 segundos
-    digitalWrite(i, LOW);  // Apagar los LEDs
-    delay(T_ON);           // Mantener apagados por 0.5 segundos
-  }
-}
+  semaforoA.FSM_Semaforo(estadoA);
+  semaforoB.FSM_Semaforo(estadoB);
+  semaforoC.FSM_Semaforo(estadoC);
+  semaforoD.FSM_Semaforo(estadoD);
+  delay(1000);
 
-// Función para el módulo RGB (Rojo)
-void Red_RGB() {
-  digitalWrite(pinR, HIGH);
-  digitalWrite(pinG, LOW);
-}
+  // Tercera fase: Cambio
+  estadoA = Cambio;
+  estadoB = Cambio;
+  estadoC = Cambio;
+  estadoD = Cambio;
 
-// Función para el módulo RGB (Verde)
-void Green_RGB() {
-  digitalWrite(pinR, LOW);
-  digitalWrite(pinG, HIGH);
-}
-
-// Función para el módulo RGB (OFF)
-void OFF_RGB() {
-  digitalWrite(pinR, LOW);
-  digitalWrite(pinG, LOW);
+  semaforoA.FSM_Semaforo(estadoA);
+  semaforoB.FSM_Semaforo(estadoB);
+  semaforoC.FSM_Semaforo(estadoC);
+  semaforoD.FSM_Semaforo(estadoD);
+  delay(1000);
 }
 
